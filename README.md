@@ -14,4 +14,4 @@ TopMED: integration of whole-genome sequencing (WGS) and other –omics (e.g., m
 
 GTEx: gene expressions in tissues
 
-AGR: Go and model organism databases http://reusabledata.org/agr.html
+AGR: Go and model organism databases
