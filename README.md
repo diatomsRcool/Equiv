@@ -26,6 +26,10 @@ search_results.json
 
 This is the "made up" example data. The user searched commons using "lung tissue" and got back three results, one from each of the three data sets mentioned above.
 
+search_results_1.json
+
+This is DATS metadata created by Team Sodium for some TopMED data files.
+
 service.py
 
-This is the code that takes as input the search results and give as output a list of tuples. The tuples are the equivalent identifiers.
+This is the code that takes as input the search results and give as output a list of tuples. Each tuple represents a relationship between two data sets, either "equivalent" or "related".
