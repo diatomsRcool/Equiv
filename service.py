@@ -5,7 +5,7 @@ import itertools
 #had to use a highly simplified, made up data set for development
 
 #this code loads the search results
-with open('search_results_1.json') as f:
+with open('search_results.json') as f:
     data = json.load(f)
 
 #this code creates a dictionary of results that incorporates the important elements
@@ -15,16 +15,20 @@ with open('search_results_1.json') as f:
 results = {}
 for i,d in enumerate(data):
 	m = []
+	d.setdefault('relatedIdentifier','')
+	d.setdefault('identifier','')
+	d.setdefault('producedBy', '')
 	m.append(d['@id'])
 	m.append(d['relatedIdentifier'])
-	m.append(d['date'])
-	m.append(d['creator'])
+	m.append(d['datePublished'])
+	m.append(d['author'])
 	m.append(d['producedBy'])
 	n = d['identifier']
 	b = {}
 	for j in n:
-		x = n['propertyID']
-		w = n['value']
+		b.setdefault('propertyID', '')
+		b.setdefault('value', '')
+		b[j['propertyID']] = j['value']
 	m.append(b)
 	results[i] = m
 
@@ -75,19 +79,21 @@ def relat_test(a,b):
 					print(id_a + ' and ' + id_b + ' are related data sets.')
 					y = 'related'
 		else:
-			xid_a = a[6] #compares doi, minid, and data guid
-			xid_b = b[6]
-			a_doi = a['doi']
-			b_doi = b['doi']
-			a_minid = a['minid']
-			b_minid = b['minid']
-			a_dataguid = a['dataguid']
-			b_dataguid = b['dataguid']
-			if a_dataguid == b_dataguid and a_minid == b_minid and a_doi == b_doi:
+			xid_a = a[5] #compares doi, minid, and data guid
+			xid_b = b[5]
+			a_doi = xid_a['doi']
+			b_doi = xid_b['doi']
+			a_minid = xid_a['minid']
+			b_minid = xid_b['minid']
+			a_dataguid = xid_a['dataguid']
+			b_dataguid = xid_b['dataguid']
+			a_md5 = xid_a['md5']
+			b_md5 = xid_b['md5']
+			if a_dataguid == b_dataguid and a_minid == b_minid and a_doi == b_doi and a_md5 == b_md5:
 				test = True
 				print(id_a + ' and ' + id_b + ' are equivalent data sets.')
 				y = 'equivalent'
-			if a_dataguid == b_dataguid and a_minid == b_minid and a_doi != b_doi:
+			if a_dataguid != b_dataguid and a_minid == b_minid and a_doi != b_doi and a_md5 != b_md5:
 				test = True
 				print(id_a + ' and ' + id_b + ' are related data sets.')
 				y = 'related'
