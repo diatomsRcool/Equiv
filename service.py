@@ -12,33 +12,33 @@ with open('search_results.json') as f:
 #that are likely to identify equivalent and related data sets
 #the key is a number
 #the value is the list of important elements
-results = {}
-for i,d in enumerate(data):
-	m = []
-	d.setdefault('relatedIdentifier','')
-	d.setdefault('identifier','')
-	d.setdefault('producedBy', '')
-	m.append(d['@id'])
-	m.append(d['relatedIdentifier'])
-	m.append(d['datePublished'])
-	m.append(d['author'])
-	m.append(d['producedBy'])
-	n = d['identifier']
-	b = {}
-	for j in n:
-		b.setdefault('propertyID', '')
-		b.setdefault('value', '')
-		b[j['propertyID']] = j['value']
-	m.append(b)
-	results[i] = m
-
-#create a list of the keys in the dictionary of results
-#this should be a list of numbers
-y = list(results.keys())
-
-#create a list of all possible pairwise combinations of the dictionary keys
-#all duplication is removed
-z = itertools.combinations(y,2)
+def transform(data):
+	results = {}
+	for i,d in enumerate(data):
+		m = []
+		d.setdefault('relatedIdentifier','')
+		d.setdefault('identifier','')
+		d.setdefault('producedBy', '')
+		m.append(d['@id'])
+		m.append(d['relatedIdentifier'])
+		m.append(d['datePublished'])
+		m.append(d['author'])
+		m.append(d['producedBy'])
+		n = d['identifier']
+		b = {}
+		for j in n:
+			b.setdefault('propertyID', '')
+			b.setdefault('value', '')
+			b[j['propertyID']] = j['value']
+		m.append(b)
+		results[i] = m
+	#create a list of the keys in the dictionary of results
+	#this should be a list of numbers
+	y = list(results.keys())
+	#create a list of all possible pairwise combinations of the dictionary keys
+	#all duplication is removed
+	z = itertools.combinations(y,2)
+	return results,z
 
 #this function finds equivalent and related data sets
 def relat_test(a,b):
@@ -101,13 +101,15 @@ def relat_test(a,b):
 
 #using the list of all key combinations, compare the values
 #return a list of equivalent and related identifiers as tuples
-equiv = []
-for p,q in z:
-	print(p)
-	print(q)
-	a = results[p]
-	b = results[q]
-	r,s,t,u = relat_test(a,b)
-	if u == True:
-		equiv.append((r,s,t))
-print(equiv)
+def get_equiv(results,z)
+	equiv = []
+	for p,q in z:
+		print(p)
+		print(q)
+		a = results[p]
+		b = results[q]
+		r,s,t,u = relat_test(a,b)
+		if u == True:
+			equiv.append((r,s,t))
+	print(equiv)
+	return equiv
