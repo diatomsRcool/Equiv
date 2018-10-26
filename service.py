@@ -5,14 +5,17 @@ import itertools
 #had to use a highly simplified, made up data set for development
 
 #this code loads the search results
-with open('search_results.json') as f:
-    data = json.load(f)
+#you only needs this if the search result is an external json file
+#with open('search_results.json') as f:
+#	data = json.load(f)
 
 #this code creates a dictionary of results that incorporates the important elements
 #that are likely to identify equivalent and related data sets
 #the key is a number
 #the value is the list of important elements
-def transform(data):
+#RUN THIS FUNDTION FIRST
+def transform(f):
+	data = json.load(f)
 	results = {}
 	for i,d in enumerate(data):
 		m = []
@@ -101,7 +104,8 @@ def relat_test(a,b):
 
 #using the list of all key combinations, compare the values
 #return a list of equivalent and related identifiers as tuples
-def get_equiv(results,z)
+#RUN THIS FUNCTION SECOND
+def get_equiv(results,z):
 	equiv = []
 	for p,q in z:
 		print(p)
